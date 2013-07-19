@@ -5,7 +5,7 @@ from widgy.db.fields import VersionedWidgyField, WidgyField
 
 
 class UnauthenticatedWidgySite(WidgySite):
-    def authorize(self, request, *args, **kwargs):
+    def authorize_view(self, request, *args, **kwargs):
         if request.COOKIES.get('unauthorized_access'):
             raise PermissionDenied
 

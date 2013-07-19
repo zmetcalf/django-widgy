@@ -31,7 +31,7 @@ def make_commit(delta=datetime.timedelta(0), vt_class=ReviewedVersionTracker):
 
 class TestApiReviewed(TestApi):
     class Site(ReviewedWidgySite):
-        def authorize(self, request, *args, **kwargs):
+        def authorize_view(self, request, *args, **kwargs):
             if request.COOKIES.get('unauthorized_access'):
                 raise PermissionDenied
 
