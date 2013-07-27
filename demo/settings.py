@@ -381,11 +381,15 @@ COMPRESS_PRECOMPILERS = (
     ('text/coffeescript', 'coffee --compile --stdio'),
     ('text/less', 'lessc {infile} {outfile}'),
     ('text/x-sass', 'sass {infile} {outfile}'),
-
-    # requires pyScss
-    ('text/x-scss', 'python -mscss.tool -C -o {outfile} %s' %
-     ' '.join(['-I "%s"' % d for d in SCSS_IMPORTS])
-     )
+    ('text/x-scss', 'python -mscss.tool --no-compress'
+                    ' --assets-root={assets_path}'
+                    ' --static-root={static_path}'
+                    ' --load-path={load_paths}'.format(
+                        load_paths=','.join(['"%s"' % d for d in SCSS_IMPORTS]),
+                        assets_path=os.path.join(STATIC_ROOT, 'assets'),
+                        static_path='widgy/static/',
+                        )
+                    ),
 )
 
 
