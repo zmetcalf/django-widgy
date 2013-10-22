@@ -171,6 +171,14 @@ define(['jquery', 'underscore', 'widgy.backbone', 'geometry'], function(
       this.trigger('stopDrag');
     },
 
+    canAcceptParent: function() {
+      throw new Error('You must override this method');
+    },
+
+    cssClasses: function() {
+      throw new Error('You must override this method');
+    },
+
     bumpAmount: function(clientY) {
       var direction,
           distance;
