@@ -37,7 +37,7 @@ t10n: widgy/locale/xx_pseudo/LC_MESSAGES/django.mo
 docs:
 	cd docs && $(MAKE) html
 
-js-lib: widgy/static/widgy/js/package.json
-	cd widgy/static/widgy/js && npm install .
+setup: widgy/static/widgy/package.json
+	cd widgy/static/widgy && npm install .
 
 .PHONY: test coverage browser test-py test-js docs
