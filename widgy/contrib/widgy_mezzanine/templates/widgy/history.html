@@ -7,12 +7,12 @@
 {% block extrahead %}
 {{ block.super }}
 {% compress css %}
-<link rel="stylesheet" href="{% static 'widgy/node_modules/dialog-component/build/build.css' %}">
+<link rel="stylesheet" href="{% static 'widgy/node_modules/dialog-component/dialog.css' %}">
 <link rel="stylesheet" href="{% static 'widgy/css/django.fusionbox.scss' %}" type="text/x-scss">
 <link rel="stylesheet" href="{% static 'widgy/css/widgy.scss' %}" type="text/x-scss">
 {% endcompress %}
 {% compress js %}
-<script src="{% static 'widgy/node_modules/dialog-component/build/build.js' %}"></script>
+<script src="{% static 'widgy/node_modules/dialog-component/index.js' %}"></script>
 <script src="{% static 'widgy/js/widgy.admin.js' %}"></script>
 {% endcompress %}
 {% endblock  %}
