@@ -1,0 +1,16 @@
+{
+  "name": "js-lib",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "js": "widgy"
+  },
+  "dependencies": {
+    "dialog-component": "~0.0.6"
+  },
+  "repository": "",
+  "author": "",
+  "license": "BSD",
+  "readmeFilename": "README.md"
+}
