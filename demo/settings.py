@@ -156,7 +156,7 @@ SCSS_IMPORTS = STATICFILES_DIRS + (
     os.path.join(WIDGY_ROOT, 'static', 'widgy', 'css'),
 )
 
-COMPRESS_ENABLED = True
+COMPRESS_ENABLED = False
 
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'python -mscss.tool -C %s' %
