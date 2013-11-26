@@ -42,24 +42,23 @@ the admin center.
       'jquery': './lib/jquery',
       'underscore': './lib/underscore',
       'backbone': './lib/backbone',
-      'text': 'require/text'
+      'text': 'require/text',
+      'dialog': 'node_modules/dialog-component/index',
+      'emitter': 'node_modules/dialog-component/components/component-emitter/index',
+      'overlay': 'node_modules/dialog-component/components/component-emitter/index',
     },
     config: {
       packages: [
         {
-          name: "node_modules/dialog-component",
+          name: "node_modules/dialog-component/index",
           main: "index"
         },
         {
-          name: "node_modules/dialog-component/components/component-emitter",
+          name: "node_modules/dialog-component/components/component-emitter/index",
           main: "index"
         },
         {
-          name: "node_modules/dialog-component/components/component-jquery",
-          main: "index"
-        },
-        {
-          name: "node_modules/dialog-component/components/component-overlay",
+          name: "node_modules/dialog-component/components/component-overlay/index",
           main: "index"
         }
       ],
@@ -69,6 +68,9 @@ the admin center.
           // https://github.com/requirejs/text#xhr-restrictions
           return true;
         }
+      },
+      shim: {
+        'dialog': ['jquery', 'dialog', 'emitter', 'overlay']
       }
     },
     {% comment %}
