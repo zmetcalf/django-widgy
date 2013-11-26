@@ -47,19 +47,19 @@ the admin center.
     config: {
       packages: [
         {
-          name: "node_modules/dialog-component/index",
+          name: "node_modules/dialog-component",
           main: "index"
         },
         {
-          name: "node_modules/dialog-component/components/component-emitter/index",
+          name: "node_modules/dialog-component/components/component-emitter",
           main: "index"
         },
         {
-          name: "node_modules/dialog-component/components/component-jquery/index",
+          name: "node_modules/dialog-component/components/component-jquery",
           main: "index"
         },
         {
-          name: "node_modules/dialog-component/components/component-overlay/index",
+          name: "node_modules/dialog-component/components/component-overlay",
           main: "index"
         }
       ],
@@ -87,7 +87,11 @@ the admin center.
 <script src="{% static 'widgy/js/widgy-main.js' %}"></script>
 <script src="{% static 'widgy/js/widgy.admin.js' %}"></script>
 {% endcompress %}
+<script>
+  require(['dialog'], function(dialog) {
 
+  });
+</script>
 <script>
   require([ 'widgy' ], function(Widgy) {
     window.widgy = new Widgy('#' + {{ html_id|json }}, {{ node_dict|json }}, {{ api_url|json }});
