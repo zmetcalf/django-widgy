@@ -15,7 +15,6 @@ the admin center.
 {% compress css %}
 <link type="text/css" rel="stylesheet" href="{% static 'widgy/css/font-awesome.css' %}">
 <link type="text/x-scss" rel="stylesheet" href="{% static 'widgy/css/widgy.scss' %}">
-<link rel="stylesheet" href="{% static 'widgy/node_modules/dialog-component/dialog.css' %}">
 <link rel="stylesheet" href="{% static 'widgy/css/django.fusionbox.scss' %}" type="text/x-scss">
 {% for scss_file in site.admin_scss_files %}
 <link type="text/x-scss" href="{% static scss_file %}" rel="stylesheet">
@@ -46,6 +45,24 @@ the admin center.
       'text': 'require/text'
     },
     config: {
+      packages: [
+        {
+          name: "node_modules/dialog-component/index",
+          main: "index"
+        },
+        {
+          name: "node_modules/dialog-component/components/component-emitter/index",
+          main: "index"
+        },
+        {
+          name: "node_modules/dialog-component/components/component-jquery/index",
+          main: "index"
+        },
+        {
+          name: "node_modules/dialog-component/components/component-overlay/index",
+          main: "index"
+        }
+      ],
       text: {
         useXhr: function (url, protocol, hostname, port) {
           // force XHR for all domains, requires CORS for cross-domain
@@ -68,7 +85,6 @@ the admin center.
 {% compress js %}
 <script src="{% static 'widgy/js/require/require.js' %}"></script>
 <script src="{% static 'widgy/js/widgy-main.js' %}"></script>
-<script src="{% static 'widgy/node_modules/dialog-component/index.js' %}"></script>
 <script src="{% static 'widgy/js/widgy.admin.js' %}"></script>
 {% endcompress %}
 

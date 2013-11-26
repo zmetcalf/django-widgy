@@ -17,4 +17,4 @@ CACHE/
 tests/.coverage
 tests/coverage_html/
 js_tests/node_modules
-widgy/static/widgy/node_modules
+widgy/static/widgy/js/node_modules
