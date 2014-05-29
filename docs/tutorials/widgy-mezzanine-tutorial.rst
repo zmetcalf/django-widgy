@@ -222,8 +222,8 @@ If you have not done so already, add the root directory of your mezzanine
 install to INSTALLED_APPS.
 
 Also, take care when setting the WIDGY_MEZZANINE_SITE variable in your
-settings.py file. Because mezzanine is using an old django format, it
-uses your root directory as your project file::
+settings.py file. Because mezzanine is using an old Django directory structure,
+it uses your root directory as your project file::
 
     # Use:
     WIDGY_MEZZANINE_SITE = 'myproject.demo.widgy_site.site'
