@@ -43,8 +43,9 @@ describe('Modal Static Functions', function() {
 
   it('should raiseError', function() {
     test.create();
+    assert.isFalse($('div').hasClass('modal'));
     modal.raiseError('Test Message');
-    assert.isTrue($('div:[1]').hasClass('modal'));
+    assert.isTrue($('div').hasClass('modal'));
     assert.deepEqual($('div').css('position'), 'fixed');
     assert.deepEqual($('.serverResponse').html(), 'Test Message');
     $(document.body).children().remove();
