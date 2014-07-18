@@ -38,7 +38,7 @@ describe('ShelfView', function() {
   });
 });
 
-describe('CoreFunctions', function() {
+describe.skip('CoreFunctions', function() {
   beforeEach(function() {
     this.node = new nodes.Node({
       content: {
