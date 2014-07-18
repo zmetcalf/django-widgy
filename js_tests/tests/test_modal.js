@@ -15,7 +15,6 @@ describe('ModalView', function() {
 
   it('should open a window', function() {
     test.create();
-    $(document.body).children().remove();
     var modal_view = new modal.ModalView();
     assert.isFalse($('div').hasClass('modal'));
     modal_view.open();
