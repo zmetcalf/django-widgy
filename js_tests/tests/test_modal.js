@@ -15,9 +15,11 @@ describe('ModalView', function() {
 
   it('should open a window', function() {
     test.create();
+    $(document.body).children().remove();
     var modal_view = new modal.ModalView();
+    assert.isFalse($('div').hasClass('modal'));
     modal_view.open();
-    assert.isTrue($('div:[1]').hasClass('modal'));
+    assert.isTrue($('div').hasClass('modal'));
     assert.deepEqual($('div').css('position'), 'fixed');
     $(document.body).children().remove();
     test.destroy();
