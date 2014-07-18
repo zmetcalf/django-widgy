@@ -9,7 +9,7 @@ var widgy = requirejs('widgy'),
     Q = requirejs('lib/q'),
     $ = requirejs('jquery');
 
-describe('AppView', function() {
+describe.skip('AppView', function() {
   beforeEach(function() {
     this.node = new nodes.Node({
       content: {
