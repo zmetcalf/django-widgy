@@ -9,7 +9,7 @@ var widgy = requirejs('widgy'),
     Q = requirejs('lib/q'),
     $ = requirejs('jquery');
 
-describe.skip('AppView', function() {
+describe('AppView', function() {
   beforeEach(function() {
     this.node = new nodes.Node({
       content: {
@@ -20,7 +20,7 @@ describe.skip('AppView', function() {
     });
   });
 
-  it('should initialize an AppView', function() {
+  it('should initialize an AppView', function(done) {
     return this.node.ready(function(node) {
       // getComponent is stubbed because testcomponent is inaccessable from AppView
       var deferal = {};
@@ -35,13 +35,14 @@ describe.skip('AppView', function() {
       app_view.root_node_promise.then(function() {
         assert.strictEqual(app_view.node_view_list.at(0).content,
                             deferal.content);
+        done();
       })
       .done();
     })
     .done();
   });
 
-  it('should renderPromise', function() {
+  it('should renderPromise', function(done) {
     return this.node.ready(function(node) {
       var deferal = {};
       _.extend(deferal, node);
@@ -66,8 +67,10 @@ describe.skip('AppView', function() {
         sinon.stub($, 'ajax', myAPI);
 
         // stubbed to reduce complexity
-        var templateAPI = function() { return '<div><%author%></div>'; }
-        sinon.stub(root_view, 'getTemplate', templateAPI);
+        var getTemplateStub = sinon.stub(root_view, 'getTemplate', function()
+                                         { return '<div><%author%></div>'; });
+        var makeStickyStub = sinon.stub(root_view, 'makeSticky',
+                                        function () { return });
 
         test.create();
 
@@ -78,6 +81,9 @@ describe.skip('AppView', function() {
           assert.strictEqual(root_view.$el.html(), '<div>Test Author</div>');
           assert.strictEqual(app_view.compatibility_data, testObject);
           test.destroy();
+          getTemplateStub.restore();
+          makeStickyStub.restore();
+          done();
         });
 
         $.ajax.restore();
@@ -87,7 +93,7 @@ describe.skip('AppView', function() {
     .done();
   });
 
-  it('should fetchCompatibility', function() {
+  it('should fetchCompatibility', function(done) {
     return this.node.ready(function(node) {
       var deferal = {};
       _.extend(deferal, node);
@@ -112,6 +118,7 @@ describe.skip('AppView', function() {
         promise.then(function(inflight) {
           assert.strictEqual(inflight, testObject);
           assert.isTrue(callback.calledOnce);
+          done();
         });
       })
       .done();
@@ -119,7 +126,7 @@ describe.skip('AppView', function() {
     .done();
   });
 
-  it('should refreshCompatibility', function() {
+  it('should refreshCompatibility', function(done) {
     return this.node.ready(function(node) {
       var deferal = {};
       _.extend(deferal, node);
@@ -145,6 +152,7 @@ describe.skip('AppView', function() {
 
         promise.then(function() {
           assert.strictEqual(app_view.compatibility_data, testObject);
+          done();
         });
       })
       .done();
@@ -152,7 +160,7 @@ describe.skip('AppView', function() {
     .done();
   });
 
-  it('should setCompatibility and updateCompatibility', function() {
+  it('should setCompatibility and updateCompatibility', function(done) {
     return this.node.ready(function(node) {
       var deferal = {};
       _.extend(deferal, node);
@@ -177,13 +185,14 @@ describe.skip('AppView', function() {
 
         callback_add.restore();
         callback_filter.restore();
+        done();
       })
       .done();
     })
     .done();
   });
 
-  it('should return if ready or not', function() {
+  it('should return if ready or not', function(done) {
     return this.node.ready(function(node) {
       var deferal = {};
       _.extend(deferal, node);
@@ -202,6 +211,7 @@ describe.skip('AppView', function() {
         app_view.setCompatibility(data);
 
         assert.isTrue(app_view.ready());
+        done();
       })
       .done();
     })
