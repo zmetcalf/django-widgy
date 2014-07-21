@@ -9,6 +9,7 @@ var widgy = requirejs('widgy'),
     Q = requirejs('lib/q'),
     $ = requirejs('jquery');
 
+
 describe('AppView', function() {
   beforeEach(function() {
     this.node = new nodes.Node({
@@ -20,6 +21,7 @@ describe('AppView', function() {
     });
   });
 
+
   it('should initialize an AppView', function(done) {
     return this.node.ready(function(node) {
       // getComponent is stubbed because testcomponent is inaccessable from AppView
@@ -28,7 +30,7 @@ describe('AppView', function() {
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
                                         function() { return Q(deferal); });
 
-      var app_view = new widgy.AppView({root_node: node});
+      var app_view = new widgy.AppView({ root_node: node });
 
       app_view.root_node_promise.then(function() {
         assert.strictEqual(app_view.node_view_list.at(0).content,
@@ -41,13 +43,14 @@ describe('AppView', function() {
     .done();
   });
 
+
   it('should renderPromise', function(done) {
     return this.node.ready(function(node) {
       var deferal = {};
       _.extend(deferal, node);
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
                                         function() { return Q(deferal); });
-      var app_view = new widgy.AppView({root_node: node, model: node});
+      var app_view = new widgy.AppView({ root_node: node, model: node });
 
       app_view.root_node_promise.then(function() {
         app_view.root_node.available_children_url = '1';
@@ -59,7 +62,7 @@ describe('AppView', function() {
         root_view.shelf = root_view.makeShelf();
 
         // setup fetchCompatibility
-        var testObject = [{model: {id: '1'}, __class__: '0'}];
+        var testObject = [{ model: { id: '1' }, __class__: '0' }];
         sinon.stub($, 'ajax', function() { return testObject; });
 
         // stubbed to reduce complexity
@@ -90,17 +93,18 @@ describe('AppView', function() {
     .done();
   });
 
+
   it('should fetchCompatibility', function(done) {
     return this.node.ready(function(node) {
       var deferal = {};
       _.extend(deferal, node);
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
                                         function() { return Q(deferal); });
-      var app_view = new widgy.AppView({root_node: node});
+      var app_view = new widgy.AppView({ root_node: node });
 
       app_view.root_node_promise.then(function() {
         var callback = sinon.spy();
-        app_view.inflight = new Object({abort: callback});
+        app_view.inflight = new Object({ abort: callback });
         app_view.root_node.available_children_url = '1';
 
         var testObject = new Object();
@@ -122,13 +126,14 @@ describe('AppView', function() {
     .done();
   });
 
+
   it('should refreshCompatibility', function(done) {
     return this.node.ready(function(node) {
       var deferal = {};
       _.extend(deferal, node);
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
                                         function() { return Q(deferal); });
-      var app_view = new widgy.AppView({root_node: node});
+      var app_view = new widgy.AppView({ root_node: node });
 
       app_view.root_node_promise.then(function() {
         app_view.root_node.available_children_url = '1';
@@ -137,7 +142,7 @@ describe('AppView', function() {
         root_view.content.shelf = true;
         root_view.shelf = root_view.makeShelf();
 
-        var testObject = [{model: {id: '1'}, __class__: '0'}];
+        var testObject = [{ model: { id: '1' }, __class__: '0' }];
         sinon.stub($, 'ajax', function() { return testObject; });
 
         var promise = Q(app_view.refreshCompatibility());
@@ -155,16 +160,17 @@ describe('AppView', function() {
     .done();
   });
 
+
   it('should setCompatibility and updateCompatibility', function(done) {
     return this.node.ready(function(node) {
       var deferal = {};
       _.extend(deferal, node);
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
                                         function() { return Q(deferal); });
-      var app_view = new widgy.AppView({root_node: node});
+      var app_view = new widgy.AppView({ root_node: node });
 
       app_view.root_node_promise.then(function() {
-        var data = [{model: {id: '1'}, __class__: '0'}];
+        var data = [{ model: { id: '1' }, __class__: '0' }];
         var root_view = app_view.node_view_list.at(0);
         root_view.content.shelf = true;
         root_view.shelf = root_view.makeShelf();
@@ -193,12 +199,12 @@ describe('AppView', function() {
       _.extend(deferal, node);
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
                                         function() { return Q(deferal); });
-      var app_view = new widgy.AppView({root_node: node});
+      var app_view = new widgy.AppView({ root_node: node });
 
       app_view.root_node_promise.then(function() {
         assert.isFalse(app_view.ready());
 
-        var data = [{model: {id: '1'}, __class__: '0'}];
+        var data = [{ model: { id: '1' }, __class__: '0' }];
         var root_view = app_view.node_view_list.at(0);
         root_view.content.shelf = true;
         root_view.shelf = root_view.makeShelf();
