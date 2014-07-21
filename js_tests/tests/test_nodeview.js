@@ -59,10 +59,9 @@ describe('CoreFunctions', function() {
     nodes_promise.then(function(node_array) {
       var deferal = {};
       _.extend(deferal, node_array[0]);
-      var myAPI = function() { return Q(deferal); };
-      sinon.stub(nodes.Node.prototype, 'getComponent', myAPI);
+      var getComponent = sinon.stub(nodes.Node.prototype, 'getComponent',
+                                    function() { return Q(deferal); });
       var app_view = new widgy.AppView({root_node: node_array[0], model: node_array[0]});
-      nodes.Node.prototype.getComponent.restore();
 
       app_view.root_node_promise.then(function() {
         var parent_view = app_view.node_view_list.at(0);
@@ -75,11 +74,13 @@ describe('CoreFunctions', function() {
             node_array[1].component.View.prototype.renderPromise.restore();
           });
         }
+
         sinon.stub(node_array[1].component.View.prototype, 'renderPromise', templateAPI);
 
         deferal.children.add(node_array[1]);
 
         assert.isTrue(parent_view.isRootNode());
+        getComponent.restore();
         done();
       })
       .done();
