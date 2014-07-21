@@ -66,8 +66,7 @@ describe('CoreFunctions', function() {
         model: node_array[0]
       });
 
-      app_view.root_node_promise.then(function() {
-        var parent_view = app_view.node_view_list.at(0);
+      app_view.root_node_promise.then(function(parent_view) {
         parent_view.$preview = parent_view.$(' > .widget > .preview ');
         parent_view.$children = parent_view.$(' > .widget > .node_chidren ');
 
