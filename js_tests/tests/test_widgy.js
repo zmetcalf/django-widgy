@@ -25,8 +25,8 @@ describe('AppView', function() {
       // getComponent is stubbed because testcomponent is inaccessable from AppView
       var deferal = {};
       _.extend(deferal, node); // copies node to prevent Backbone from making child
-      var myAPI = function() { return Q(deferal); };
-      sinon.stub(nodes.Node.prototype, 'getComponent', myAPI);
+      var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
+                                        function() { return Q(deferal); });
 
       var app_view = new widgy.AppView({root_node: node});
 
@@ -35,6 +35,7 @@ describe('AppView', function() {
       app_view.root_node_promise.then(function() {
         assert.strictEqual(app_view.node_view_list.at(0).content,
                             deferal.content);
+        getComponentStub.restore();
         done();
       })
       .done();
@@ -46,8 +47,8 @@ describe('AppView', function() {
     return this.node.ready(function(node) {
       var deferal = {};
       _.extend(deferal, node);
-      var myAPI = function() { return Q(deferal); };
-      sinon.stub(nodes.Node.prototype, 'getComponent', myAPI);
+      var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
+                                        function() { return Q(deferal); });
       var app_view = new widgy.AppView({root_node: node, model: node});
       nodes.Node.prototype.getComponent.restore();
 
@@ -63,8 +64,7 @@ describe('AppView', function() {
 
         // setup fetchCompatibility
         var testObject = [{model: {id: '1'}, __class__: '0'}];
-        var myAPI = function() { return testObject; };
-        sinon.stub($, 'ajax', myAPI);
+        sinon.stub($, 'ajax', function() { return testObject; });
 
         // stubbed to reduce complexity
         var getTemplateStub = sinon.stub(root_view, 'getTemplate', function()
@@ -81,6 +81,7 @@ describe('AppView', function() {
           assert.strictEqual(root_view.$el.html(), '<div>Test Author</div>');
           assert.strictEqual(app_view.compatibility_data, testObject);
           test.destroy();
+          getComponentStub.restore();
           getTemplateStub.restore();
           makeStickyStub.restore();
           done();
@@ -97,8 +98,8 @@ describe('AppView', function() {
     return this.node.ready(function(node) {
       var deferal = {};
       _.extend(deferal, node);
-      var myAPI = function() { return Q(deferal); };
-      sinon.stub(nodes.Node.prototype, 'getComponent', myAPI);
+      var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
+                                        function() { return Q(deferal); });
       var app_view = new widgy.AppView({root_node: node});
       nodes.Node.prototype.getComponent.restore();
 
@@ -108,8 +109,7 @@ describe('AppView', function() {
         app_view.root_node.available_children_url = '1';
 
         var testObject = new Object();
-        var myAPI = function() { return testObject; };
-        sinon.stub($, 'ajax', myAPI);
+        sinon.stub($, 'ajax', function() { return testObject; });
 
         var promise = app_view.fetchCompatibility();
 
@@ -118,6 +118,7 @@ describe('AppView', function() {
         promise.then(function(inflight) {
           assert.strictEqual(inflight, testObject);
           assert.isTrue(callback.calledOnce);
+          getComponentStub.restore();
           done();
         });
       })
@@ -130,8 +131,8 @@ describe('AppView', function() {
     return this.node.ready(function(node) {
       var deferal = {};
       _.extend(deferal, node);
-      var myAPI = function() { return Q(deferal); };
-      sinon.stub(nodes.Node.prototype, 'getComponent', myAPI);
+      var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
+                                        function() { return Q(deferal); });
       var app_view = new widgy.AppView({root_node: node});
       nodes.Node.prototype.getComponent.restore();
 
@@ -143,8 +144,7 @@ describe('AppView', function() {
         root_view.shelf = root_view.makeShelf();
 
         var testObject = [{model: {id: '1'}, __class__: '0'}];
-        var myAPI = function() { return testObject; };
-        sinon.stub($, 'ajax', myAPI);
+        sinon.stub($, 'ajax', function() { return testObject; });
 
         var promise = Q(app_view.refreshCompatibility());
 
@@ -152,6 +152,7 @@ describe('AppView', function() {
 
         promise.then(function() {
           assert.strictEqual(app_view.compatibility_data, testObject);
+          getComponentStub.restore();
           done();
         });
       })
@@ -164,8 +165,8 @@ describe('AppView', function() {
     return this.node.ready(function(node) {
       var deferal = {};
       _.extend(deferal, node);
-      var myAPI = function() { return Q(deferal); };
-      sinon.stub(nodes.Node.prototype, 'getComponent', myAPI);
+      var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
+                                        function() { return Q(deferal); });
       var app_view = new widgy.AppView({root_node: node});
       nodes.Node.prototype.getComponent.restore();
 
@@ -185,6 +186,7 @@ describe('AppView', function() {
 
         callback_add.restore();
         callback_filter.restore();
+        getComponentStub.restore();
         done();
       })
       .done();
@@ -196,8 +198,8 @@ describe('AppView', function() {
     return this.node.ready(function(node) {
       var deferal = {};
       _.extend(deferal, node);
-      var myAPI = function() { return Q(deferal); };
-      sinon.stub(nodes.Node.prototype, 'getComponent', myAPI);
+      var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
+                                        function() { return Q(deferal); });
       var app_view = new widgy.AppView({root_node: node});
       nodes.Node.prototype.getComponent.restore();
 
@@ -211,6 +213,7 @@ describe('AppView', function() {
         app_view.setCompatibility(data);
 
         assert.isTrue(app_view.ready());
+        getComponentStub.restore();
         done();
       })
       .done();
