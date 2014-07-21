@@ -87,7 +87,7 @@ describe('CoreFunctions', function() {
     .done();
   });
 
-  it('should deleteSelf', function() {
+  it('should deleteSelf', function(done) {
     return this.node.ready(function(node) {
       var node_view = new nodes.NodeView({model: node});
       node_view.shelf = node_view.makeShelf();
@@ -106,6 +106,7 @@ describe('CoreFunctions', function() {
       node_view.node.destroy.restore();
       node_view.list.closeAll.restore();
       node_view.shelf.close.restore();
+      done();
     })
     .done();
   });
