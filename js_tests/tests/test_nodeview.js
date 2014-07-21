@@ -192,12 +192,12 @@ describe('CoreFunctions', function() {
             assert.isUndefined(parent_view.drop_targets_list.at(0));
             getComponentStub.restore();
             test.destroy();
+            done();
           });
         }
         sinon.stub(node_array[1].component.View.prototype, 'renderPromise', templateAPI);
 
         deferal.children.add(node_array[1]);
-        done();
       })
       .done();
     })
