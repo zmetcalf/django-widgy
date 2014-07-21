@@ -61,7 +61,10 @@ describe('CoreFunctions', function() {
       _.extend(deferal, node_array[0]);
       var getComponent = sinon.stub(nodes.Node.prototype, 'getComponent',
                                     function() { return Q(deferal); });
-      var app_view = new widgy.AppView({root_node: node_array[0], model: node_array[0]});
+      var app_view = new widgy.AppView({
+        root_node: node_array[0],
+        model: node_array[0]
+      });
 
       app_view.root_node_promise.then(function() {
         var parent_view = app_view.node_view_list.at(0);
@@ -76,7 +79,8 @@ describe('CoreFunctions', function() {
           });
         }
 
-        var nodeArrayStub = sinon.stub(node_array[1].component.View.prototype, 'renderPromise', templateAPI);
+        var nodeArrayStub = sinon.stub(node_array[1].component.View.prototype,
+                                       'renderPromise', templateAPI);
 
         deferal.children.add(node_array[1]);
 
@@ -209,17 +213,6 @@ describe('CoreFunctions', function() {
     return this.node.ready(function(node) {
       var node_view = new nodes.NodeView({model: node});
       assert.deepEqual(node_view.getTemplate(), '<span><%preview_template%></span>');
-      done();
-    });
-  });
-
-  it('should cleanUp', function(done) {
-    return this.node.ready(function(node) {
-      var node_view = new nodes.NodeView({model: node});
-      node_view.shelf = node_view.makeShelf();
-      node_view.$preview = node_view.$(' > .widget > .preview ');
-      node_view.$children = node_view.$(' > .widget > .node_chidren ');
-      node_view.cleanUp();
       done();
     });
   });
