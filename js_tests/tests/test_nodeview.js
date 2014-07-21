@@ -103,7 +103,7 @@ describe('CoreFunctions', function() {
 
       assert.isTrue(node_view.node.destroy.calledOnce);
       assert.isTrue(node_view.list.closeAll.calledOnce);
-      assert.isTrue(node_view.shelf.close.calledOnce);
+      assert.isTrue(node_view.shelf.close.calledTwice);
 
       node_view.node.destroy.restore();
       node_view.list.closeAll.restore();
