@@ -91,6 +91,8 @@ describe('CoreFunctions', function() {
     return this.node.ready(function(node) {
       var node_view = new nodes.NodeView({model: node});
       node_view.shelf = node_view.makeShelf();
+      node_view.$preview = node_view.$(' > .widget > .preview ');
+      node_view.$children = node_view.$(' > .widget > .node_chidren ');
       node_view.node.collection = node.children;
 
       sinon.spy(node_view.node, 'destroy');
