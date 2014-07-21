@@ -117,10 +117,9 @@ describe('CoreFunctions', function() {
     nodes_promise.then(function(node_array) {
       var deferal = {};
       _.extend(deferal, node_array[0]);
-      var myAPI = function() { return Q(deferal); };
-      sinon.stub(nodes.Node.prototype, 'getComponent', myAPI);
-      var app_view = new widgy.AppView({root_node: node_array[0], model: node_array[0]});
-      nodes.Node.prototype.getComponent.restore();
+      var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
+                                        function() { return Q(deferal); });
+      var app_view = new widgy.AppView({ root_node: node_array[0], model: node_array[0] });
 
       app_view.root_node_promise.then(function() {
         var parent_view = app_view.node_view_list.at(0);
@@ -129,7 +128,6 @@ describe('CoreFunctions', function() {
 
         var templateAPI = function() {
           return Q('<span><%title%></span>').then(function() {
-            node_array[1].component.View.prototype.renderPromise.restore();
             parent_view.startDrag(app_view.node_view_list.at(1));
 
             var drop_targets_list = parent_view.drop_targets_list;
@@ -146,12 +144,14 @@ describe('CoreFunctions', function() {
             assert.isFalse(drop_targets_list.at(0).$el.hasClass('active'));
 
             test.destroy();
+            getComponentStub.restore();
+            node_array[1].component.View.prototype.renderPromise.restore();
+            done();
           });
         }
         sinon.stub(node_array[1].component.View.prototype, 'renderPromise', templateAPI);
 
         deferal.children.add(node_array[1]);
-        done();
       })
       .done();
     })
@@ -164,10 +164,9 @@ describe('CoreFunctions', function() {
     nodes_promise.then(function(node_array) {
       var deferal = {};
       _.extend(deferal, node_array[0]);
-      var myAPI = function() { return Q(deferal); };
-      sinon.stub(nodes.Node.prototype, 'getComponent', myAPI);
+      var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
+                                        function() { return Q(deferal); });
       var app_view = new widgy.AppView({root_node: node_array[0], model: node_array[0]});
-      nodes.Node.prototype.getComponent.restore();
 
       app_view.root_node_promise.then(function() {
         var parent_view = app_view.node_view_list.at(0);
@@ -189,6 +188,7 @@ describe('CoreFunctions', function() {
             assert.isTrue(callback.calledWith(app_view.node_view_list.at(1)));
             assert.isUndefined(parent_view.dragged_view);
             assert.isUndefined(parent_view.drop_targets_list.at(0));
+            getComponentStub.restore();
             test.destroy();
           });
         }
