@@ -71,17 +71,17 @@ describe('CoreFunctions', function() {
         var templateAPI = function() {
           return Q('<span><%title%></span>').then(function() {
             assert.isFalse(app_view.node_view_list.at(1).isRootNode());
-            node_array[1].component.View.prototype.renderPromise.restore();
+            nodeArrayStub.restore();
+            done();
           });
         }
 
-        sinon.stub(node_array[1].component.View.prototype, 'renderPromise', templateAPI);
+        var nodeArrayStub = sinon.stub(node_array[1].component.View.prototype, 'renderPromise', templateAPI);
 
         deferal.children.add(node_array[1]);
 
         assert.isTrue(parent_view.isRootNode());
         getComponent.restore();
-        done();
       })
       .done();
     })
