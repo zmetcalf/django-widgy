@@ -10,8 +10,9 @@ describe('ModalView', function() {
   it('should return the message with toJSON', function() {
     var modal_view = new modal.ModalView();
     modal_view.message = 'Test Complete';
-    assert.deepEqual(modal_view.toJSON(), {message: 'Test Complete'});
+    assert.deepEqual(modal_view.toJSON(), { message: 'Test Complete' });
   });
+
 
   it('should open a window', function() {
     test.create();
@@ -25,24 +26,27 @@ describe('ModalView', function() {
   });
 });
 
+
 describe('ErrorView', function() {
   it('should construct a new ErrorView', function() {
-    var error_view = new modal.ErrorView({message: 'Test Message'});
+    var error_view = new modal.ErrorView({ message: 'Test Message' });
     assert.deepEqual(error_view.message, 'Test Message');
   });
 });
+
 
 describe('Modal Static Functions', function() {
   beforeEach(function() {
     test.create();
   });
 
+
   afterEach(function() {
     test.destroy();
   });
 
+
   it('should raiseError', function() {
-    test.create();
     assert.isFalse($('div').hasClass('modal'));
     modal.raiseError('Test Message');
     assert.isTrue($('div').hasClass('modal'));
@@ -51,10 +55,11 @@ describe('Modal Static Functions', function() {
     $(document.body).children().remove();
   });
 
+
   it('should handle an ajaxError', function() {
     var model = new Object(),
         resp = {
-          getResponseHeader: function() {return ['application/json'];},
+          getResponseHeader: function() { return ['application/json']; },
           responseText: '"Data Test"',
           status: 200
         },
@@ -64,7 +69,7 @@ describe('Modal Static Functions', function() {
     assert.deepEqual($('.serverResponse').html(), 'Data Test');
     $(document.body).children().remove();
 
-    resp.responseText = new Object('{"message": "Object Test"}');
+    resp.responseText = new Object('{ "message": "Object Test" }');
     modal.ajaxError(model, resp, options);
     assert.deepEqual($('.serverResponse').html(), 'Object Test');
     $(document.body).children().remove();
@@ -80,10 +85,11 @@ describe('Modal Static Functions', function() {
     $(document.body).children().remove();
   });
 
+
   it('should handle an ajaxError with a non-json response', function(){
     var model = new Object(),
         resp = {
-          getResponseHeader: function() {return ['app/not/json'];},
+          getResponseHeader: function() { return ['app/not/json']; },
           responseText: 'Test Failure'
         },
         options = {};
@@ -91,6 +97,7 @@ describe('Modal Static Functions', function() {
     assert.deepEqual($('.serverResponse').html(), 'Test Failure');
     $(document.body).children().remove();
   });
+
 
   it('should confirm success', function() {
     var message = 'Are you sure you want to delete?',
@@ -103,6 +110,7 @@ describe('Modal Static Functions', function() {
     assert.isFalse(failure.calledOnce);
     stub.restore();
   });
+
 
   it('should confirm failure', function() {
     var message = 'Are you sure you want to delete?',
