@@ -75,6 +75,7 @@ describe('CoreFunctions', function() {
           return Q('<span><%title%></span>').then(function() {
             assert.isFalse(app_view.node_view_list.at(1).isRootNode());
             nodeArrayStub.restore();
+            getComponent.restore();
             done();
           });
         }
@@ -85,7 +86,6 @@ describe('CoreFunctions', function() {
         deferal.children.add(node_array[1]);
 
         assert.isTrue(parent_view.isRootNode());
-        getComponent.restore();
       })
       .done();
     })
