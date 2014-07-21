@@ -30,8 +30,6 @@ describe('AppView', function() {
 
       var app_view = new widgy.AppView({root_node: node});
 
-      nodes.Node.prototype.getComponent.restore();
-
       app_view.root_node_promise.then(function() {
         assert.strictEqual(app_view.node_view_list.at(0).content,
                             deferal.content);
@@ -50,8 +48,6 @@ describe('AppView', function() {
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
                                         function() { return Q(deferal); });
       var app_view = new widgy.AppView({root_node: node, model: node});
-      nodes.Node.prototype.getComponent.restore();
-
 
       app_view.root_node_promise.then(function() {
         app_view.root_node.available_children_url = '1';
@@ -101,7 +97,6 @@ describe('AppView', function() {
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
                                         function() { return Q(deferal); });
       var app_view = new widgy.AppView({root_node: node});
-      nodes.Node.prototype.getComponent.restore();
 
       app_view.root_node_promise.then(function() {
         var callback = sinon.spy();
@@ -134,7 +129,6 @@ describe('AppView', function() {
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
                                         function() { return Q(deferal); });
       var app_view = new widgy.AppView({root_node: node});
-      nodes.Node.prototype.getComponent.restore();
 
       app_view.root_node_promise.then(function() {
         app_view.root_node.available_children_url = '1';
@@ -168,7 +162,6 @@ describe('AppView', function() {
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
                                         function() { return Q(deferal); });
       var app_view = new widgy.AppView({root_node: node});
-      nodes.Node.prototype.getComponent.restore();
 
       app_view.root_node_promise.then(function() {
         var data = [{model: {id: '1'}, __class__: '0'}];
@@ -201,7 +194,6 @@ describe('AppView', function() {
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
                                         function() { return Q(deferal); });
       var app_view = new widgy.AppView({root_node: node});
-      nodes.Node.prototype.getComponent.restore();
 
       app_view.root_node_promise.then(function() {
         assert.isFalse(app_view.ready());
