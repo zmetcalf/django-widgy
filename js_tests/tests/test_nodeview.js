@@ -38,7 +38,7 @@ describe('ShelfView', function() {
   });
 });
 
-describe.skip('CoreFunctions', function() {
+describe('CoreFunctions', function() {
   beforeEach(function() {
     this.node = new nodes.Node({
       content: {
@@ -54,7 +54,7 @@ describe.skip('CoreFunctions', function() {
     });
   });
 
-  it('should return if it is the root node', function() {
+  it('should return if it is the root node', function(done) {
     var nodes_promise = Q.all([this.node.ready(), this.node2.ready()]);
     nodes_promise.then(function(node_array) {
       var deferal = {};
@@ -80,7 +80,7 @@ describe.skip('CoreFunctions', function() {
         deferal.children.add(node_array[1]);
 
         assert.isTrue(parent_view.isRootNode());
-
+        done();
       })
       .done();
     })
@@ -110,7 +110,7 @@ describe.skip('CoreFunctions', function() {
     .done();
   });
 
-  it('should startDrag', function() {
+  it('should startDrag', function(done) {
     test.create();
     var nodes_promise = Q.all([this.node.ready(), this.node2.ready()]);
     nodes_promise.then(function(node_array) {
@@ -150,13 +150,14 @@ describe.skip('CoreFunctions', function() {
         sinon.stub(node_array[1].component.View.prototype, 'renderPromise', templateAPI);
 
         deferal.children.add(node_array[1]);
+        done();
       })
       .done();
     })
     .done();
   });
 
-  it('should stopDrag', function() {
+  it('should stopDrag', function(done) {
     test.create();
     var nodes_promise = Q.all([this.node.ready(), this.node2.ready()]);
     nodes_promise.then(function(node_array) {
@@ -193,30 +194,33 @@ describe.skip('CoreFunctions', function() {
         sinon.stub(node_array[1].component.View.prototype, 'renderPromise', templateAPI);
 
         deferal.children.add(node_array[1]);
+        done();
       })
       .done();
     })
     .done();
   });
 
-  it('should getTemplate', function() {
+  it('should getTemplate', function(done) {
     return this.node.ready(function(node) {
       var node_view = new nodes.NodeView({model: node});
       assert.deepEqual(node_view.getTemplate(), '<span><%preview_template%></span>');
+      done();
     });
   });
 
-  it('should cleanUp', function() {
+  it('should cleanUp', function(done) {
     return this.node.ready(function(node) {
       var node_view = new nodes.NodeView({model: node});
       node_view.shelf = node_view.makeShelf();
       node_view.$preview = node_view.$(' > .widget > .preview ');
       node_view.$children = node_view.$(' > .widget > .node_chidren ');
       node_view.cleanUp();
+      done();
     });
   });
 
-  it('should popOut', function() {
+  it('should popOut', function(done) {
     return this.node.ready(function(node) {
       var node_view = new nodes.NodeView({model: node});
       node_view.shelf = node_view.makeShelf();
@@ -231,10 +235,11 @@ describe.skip('CoreFunctions', function() {
 
       assert.strictEqual(node_view.subwindow.widgyCloseCallback, node_view.popIn);
       assert.isTrue(node_view.$el.hasClass('poppedOut'));
+      done();
     });
   });
 
-  it('should popIn', function() {
+  it('should popIn', function(done) {
     return this.node.ready(function(node) {
       var node_view = new nodes.NodeView({model: node});
       node_view.shelf = node_view.makeShelf();
@@ -251,10 +256,11 @@ describe.skip('CoreFunctions', function() {
       node_view.node.fetch.restore();
 
       assert.isFalse(node_view.$el.hasClass('poppedOut'));
+      done();
     });
   });
 
-  it('should closeSubwindow', function() {
+  it('should closeSubwindow', function(done) {
     return this.node.ready(function(node) {
       var node_view = new nodes.NodeView({model: node});
       node_view.shelf = node_view.makeShelf();
@@ -270,6 +276,7 @@ describe.skip('CoreFunctions', function() {
       window.open.restore();
 
       assert.isTrue(callback.calledOnce);
+      done();
     });
   });
 });
