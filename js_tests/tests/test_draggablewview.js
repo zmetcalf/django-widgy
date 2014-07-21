@@ -39,9 +39,11 @@ describe('DraggablewView', function() {
 
   it('should render', function(done) {
     return this.node.ready(function(node) {
+      var spy = sinon.spy(DraggableView.prototype, 'render');
       var test_view = new TestView({ model: node });
       test_view.testRender();
       assert.isTrue(test_view.$el.hasClass('bar'));
+      assert(DraggableView.prototype.render.calledOnce);
       done();
     });
   });
@@ -49,8 +51,10 @@ describe('DraggablewView', function() {
 
   it('should return cssClasses', function(done) {
     return this.node.ready(function(node) {
+      var spy = sinon.spy(DraggableView.prototype, 'cssClasses');
       var test_view = new TestView({ model: node });
       assert.deepEqual(test_view.testCssClasses(), { 'foo': 'bar' });
+      assert(DraggableView.prototype.cssClasses.calledOnce);
       done();
     });
   });
