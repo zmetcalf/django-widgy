@@ -55,10 +55,9 @@ describe('NodeView', function() {
   });
 
   describe('as root node', function() {
-    var nodes_promise,
-        root_node_setup;
+    var root_node_setup;
     beforeEach(function(done) {
-      nodes_promise = Q.all([this.node.ready(), this.node2.ready()]);
+      var nodes_promise = Q.all([this.node.ready(), this.node2.ready()]);
       root_node_setup =  nodes_promise.then(function(node_array) {
         var deferal = {};
         _.extend(deferal, node_array[0]);
@@ -182,96 +181,96 @@ describe('NodeView', function() {
     });
   });
 
-  it('should deleteSelf', function(done) {
-    return this.node.ready(function(node) {
+  describe('CoreFunctions', function() {
+    var create_node_view = function(node) {
       var node_view = new nodes.NodeView({model: node});
       node_view.shelf = node_view.makeShelf();
       node_view.$preview = node_view.$(' > .widget > .preview ');
       node_view.$children = node_view.$(' > .widget > .node_chidren ');
       node_view.node.collection = node.children;
+      return node_view;
+    };
 
-      sinon.spy(node_view.node, 'destroy');
-      sinon.spy(node_view.list, 'closeAll');
-      sinon.spy(node_view.shelf, 'close');
-
-      node_view.deleteSelf();
-
-      assert.isTrue(node_view.node.destroy.calledOnce);
-      assert.isTrue(node_view.list.closeAll.calledOnce);
-      assert.isTrue(node_view.shelf.close.calledTwice);
-
-      node_view.node.destroy.restore();
-      node_view.list.closeAll.restore();
-      node_view.shelf.close.restore();
-      done();
-    })
-    .done();
-  });
-  it('should getTemplate', function(done) {
-    return this.node.ready(function(node) {
-      var node_view = new nodes.NodeView({model: node});
-      assert.deepEqual(node_view.getTemplate(), '<span><%preview_template%></span>');
-      done();
+    it('should getTemplate', function(done) {
+      return this.node.ready(function(node) {
+        var node_view = new nodes.NodeView({model: node});
+        assert.deepEqual(node_view.getTemplate(), '<span><%preview_template%></span>');
+        done();
+      });
     });
-  });
 
-  it('should popOut', function(done) {
-    return this.node.ready(function(node) {
-      var node_view = new nodes.NodeView({model: node});
-      node_view.shelf = node_view.makeShelf();
-      node_view.$preview = node_view.$(' > .widget > .preview ');
-      node_view.$children = node_view.$(' > .widget > .node_chidren ');
-      var eve = $.Event('click', {target: {href: {foo: 'bar'}}});
-      sinon.stub(window, 'open', function(val) {return val;});
+    it('should deleteSelf', function(done) {
+      return this.node.ready(function(node) {
+        var node_view = create_node_view(node);
 
-      node_view.popOut(eve);
+        sinon.spy(node_view.node, 'destroy');
+        sinon.spy(node_view.list, 'closeAll');
+        sinon.spy(node_view.shelf, 'close');
 
-      window.open.restore();
+        node_view.deleteSelf();
 
-      assert.strictEqual(node_view.subwindow.widgyCloseCallback, node_view.popIn);
-      assert.isTrue(node_view.$el.hasClass('poppedOut'));
-      done();
+        assert.isTrue(node_view.node.destroy.calledOnce);
+        assert.isTrue(node_view.list.closeAll.calledOnce);
+        assert.isTrue(node_view.shelf.close.calledTwice);
+
+        node_view.node.destroy.restore();
+        node_view.list.closeAll.restore();
+        node_view.shelf.close.restore();
+        done();
+      })
+      .done();
     });
-  });
 
-  it('should popIn', function(done) {
-    return this.node.ready(function(node) {
-      var node_view = new nodes.NodeView({model: node});
-      node_view.shelf = node_view.makeShelf();
-      node_view.$preview = node_view.$(' > .widget > .preview ');
-      node_view.$children = node_view.$(' > .widget > .node_chidren ');
-      var eve = $.Event('click', {target: {href: {foo: 'bar'}}});
-      sinon.stub(window, 'open', function(val) {return val;});
-      sinon.stub(node_view.node, 'fetch', function() {return;}); // stops rerender
+    it('should popOut', function(done) {
+      return this.node.ready(function(node) {
+        var node_view = create_node_view(node);
+        var eve = $.Event('click', {target: {href: {foo: 'bar'}}});
+        sinon.stub(window, 'open', function(val) {return val;});
 
-      node_view.popOut(eve);
-      node_view.popIn(eve);
+        node_view.popOut(eve);
 
-      window.open.restore();
-      node_view.node.fetch.restore();
+        window.open.restore();
 
-      assert.isFalse(node_view.$el.hasClass('poppedOut'));
-      done();
+        assert.strictEqual(node_view.subwindow.widgyCloseCallback, node_view.popIn);
+        assert.isTrue(node_view.$el.hasClass('poppedOut'));
+        done();
+      });
     });
-  });
 
-  it('should closeSubwindow', function(done) {
-    return this.node.ready(function(node) {
-      var node_view = new nodes.NodeView({model: node});
-      node_view.shelf = node_view.makeShelf();
-      node_view.$preview = node_view.$(' > .widget > .preview ');
-      node_view.$children = node_view.$(' > .widget > .node_chidren ');
-      var callback = sinon.spy();
-      var eve = $.Event('click', {target: {href: {foo: 'bar', close: callback}}});
-      sinon.stub(window, 'open', function(val) {return val;});
+    it('should popIn', function(done) {
+      return this.node.ready(function(node) {
+        var node_view = create_node_view(node);
+        var eve = $.Event('click', {target: {href: {foo: 'bar'}}});
+        sinon.stub(window, 'open', function(val) {return val;});
+        sinon.stub(node_view.node, 'fetch', function() {return;}); // stops rerender
 
-      node_view.popOut(eve);
-      assert.isFalse(node_view.closeSubwindow());
+        node_view.popOut(eve);
+        node_view.popIn(eve);
 
-      window.open.restore();
+        window.open.restore();
+        node_view.node.fetch.restore();
 
-      assert.isTrue(callback.calledOnce);
-      done();
+        assert.isFalse(node_view.$el.hasClass('poppedOut'));
+        done();
+      });
     });
+
+    it('should closeSubwindow', function(done) {
+      return this.node.ready(function(node) {
+        var node_view = create_node_view(node);
+        var callback = sinon.spy();
+        var eve = $.Event('click', {target: {href: {foo: 'bar', close: callback}}});
+        sinon.stub(window, 'open', function(val) {return val;});
+
+        node_view.popOut(eve);
+        assert.isFalse(node_view.closeSubwindow());
+
+        window.open.restore();
+
+        assert.isTrue(callback.calledOnce);
+        done();
+      });
+    });
+
   });
 });
