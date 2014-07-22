@@ -114,10 +114,15 @@ describe('NodeView', function() {
           var templateAPI = function() {
             return Q('<span><%title%></span>').then(function() {
               var drop_targets_spy = sinon.spy(parent_view, 'addDropTargets');
+              var accept_child_spy = sinon.spy(parent_view, 'canAcceptChild');
               parent_view.startDrag(app_view_object.app_view.node_view_list.at(1));
 
               assert.strictEqual(parent_view.dragged_view, app_view_object.app_view.node_view_list.at(1));
-              assert.isTrue(drop_targets_spy.withArgs(parent_view.dragged_view).calledOnce)
+
+              var dragged_view = parent_view.dragged_view;
+              assert.isTrue(drop_targets_spy.withArgs(dragged_view).calledOnce);
+              assert.isTrue(accept_child_spy.withArgs(dragged_view).calledOnce);
+              assert.isTrue(accept_child_spy.withArgs(dragged_view).returned(true));
 
               var drop_targets_list = parent_view.drop_targets_list;
               assert.instanceOf(drop_targets_list.at(0), nodes.DropTargetView);
