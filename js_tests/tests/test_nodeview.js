@@ -59,16 +59,16 @@ describe('NodeView', function() {
     beforeEach(function(done) {
       var nodes_promise = Q.all([this.node.ready(), this.node2.ready()]);
       root_node_setup =  nodes_promise.then(function(node_array) {
-        var deferal = {};
-        _.extend(deferal, node_array[0]);
+        var node_object = {};
+        _.extend(node_object, node_array[0]);
         var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
-                                      function() { return Q(deferal); });
+                                      function() { return Q(node_object); });
         var app_view = new widgy.AppView({
           root_node: node_array[0],
           model: node_array[0]
         });
         return {
-          deferal: deferal,
+          node_object: node_object,
           node_array: node_array,
           app_view: app_view,
           getComponentStub: getComponentStub,
@@ -95,7 +95,7 @@ describe('NodeView', function() {
           var nodeArrayStub = sinon.stub(app_view_object.node_array[1].component.View.prototype,
                                         'renderPromise', templateAPI);
 
-          app_view_object.deferal.children.add(app_view_object.node_array[1]);
+          app_view_object.node_object.children.add(app_view_object.node_array[1]);
 
           assert.isTrue(parent_view.isRootNode());
         })
@@ -136,7 +136,7 @@ describe('NodeView', function() {
           }
           var nodeArrayStub = sinon.stub(app_view_object.node_array[1].component.View.prototype, 'renderPromise', templateAPI);
 
-          app_view_object.deferal.children.add(app_view_object.node_array[1]);
+          app_view_object.node_object.children.add(app_view_object.node_array[1]);
         })
         .done();
       })
@@ -154,7 +154,7 @@ describe('NodeView', function() {
 
           var templateAPI = function() {
             return Q('<span><%title%></span>').then(function() {
-              app_view_object.node_array[1].component.View.prototype.renderPromise.restore();
+              nodeArrayStub.restore();
               parent_view.startDrag(app_view_object.app_view.node_view_list.at(1));
               assert.strictEqual(parent_view.dragged_view, app_view_object.app_view.node_view_list.at(1));
               assert.isNotNull(parent_view.drop_targets_list.at(0));
@@ -171,9 +171,9 @@ describe('NodeView', function() {
               done();
             });
           }
-          sinon.stub(app_view_object.node_array[1].component.View.prototype, 'renderPromise', templateAPI);
+          var nodeArrayStub = sinon.stub(app_view_object.node_array[1].component.View.prototype, 'renderPromise', templateAPI);
 
-          app_view_object.deferal.children.add(app_view_object.node_array[1]);
+          app_view_object.node_object.children.add(app_view_object.node_array[1]);
         })
         .done();
       })
