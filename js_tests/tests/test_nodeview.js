@@ -123,6 +123,8 @@ describe('NodeView', function() {
               assert.isTrue(drop_targets_spy.withArgs(dragged_view).calledOnce);
               assert.isTrue(accept_child_spy.withArgs(dragged_view).calledOnce);
               assert.isTrue(accept_child_spy.withArgs(dragged_view).returned(true));
+              drop_targets_spy.restore();
+              accept_child_spy.restore();
 
               var drop_targets_list = parent_view.drop_targets_list;
               assert.instanceOf(drop_targets_list.at(0), nodes.DropTargetView);
