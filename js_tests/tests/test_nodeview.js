@@ -38,7 +38,7 @@ describe('ShelfView', function() {
   });
 });
 
-describe('CoreFunctions', function() {
+describe('NodeView', function() {
   beforeEach(function() {
     this.node = new nodes.Node({
       content: {
@@ -54,41 +54,57 @@ describe('CoreFunctions', function() {
     });
   });
 
-  it('should return if it is the root node', function(done) {
-    var nodes_promise = Q.all([this.node.ready(), this.node2.ready()]);
-    nodes_promise.then(function(node_array) {
-      var deferal = {};
-      _.extend(deferal, node_array[0]);
-      var getComponent = sinon.stub(nodes.Node.prototype, 'getComponent',
-                                    function() { return Q(deferal); });
-      var app_view = new widgy.AppView({
-        root_node: node_array[0],
-        model: node_array[0]
+  describe('as root node', function() {
+    var nodes_promise,
+        root_node_setup;
+    beforeEach(function(done) {
+      nodes_promise = Q.all([this.node.ready(), this.node2.ready()]);
+      root_node_setup =  nodes_promise.then(function(node_array) {
+        var deferal = {};
+        _.extend(deferal, node_array[0]);
+        var getComponent = sinon.stub(nodes.Node.prototype, 'getComponent',
+                                      function() { return Q(deferal); });
+        var app_view = new widgy.AppView({
+          root_node: node_array[0],
+          model: node_array[0]
+        });
+        return {
+          deferal: deferal,
+          node_array: node_array,
+          app_view: app_view,
+          getComponent: getComponent,
+        };
       });
+      done();
+    });
 
-      app_view.root_node_promise.then(function(parent_view) {
-        parent_view.$preview = parent_view.$(' > .widget > .preview ');
-        parent_view.$children = parent_view.$(' > .widget > .node_chidren ');
+    it('should return if it is the root node', function(done) {
+      debugger
+      root_node_setup.then(function (app_view_object) {
+        app_view_object.app_view.root_node_promise.then(function(parent_view) {
+          parent_view.$preview = parent_view.$(' > .widget > .preview ');
+          parent_view.$children = parent_view.$(' > .widget > .node_chidren ');
 
-        var templateAPI = function() {
-          return Q('<span><%title%></span>').then(function() {
-            assert.isFalse(app_view.node_view_list.at(1).isRootNode());
-            nodeArrayStub.restore();
-            getComponent.restore();
-            done();
-          });
-        }
+          var templateAPI = function() {
+            return Q('<span><%title%></span>').then(function() {
+              assert.isFalse(app_view_object.app_view.node_view_list.at(1).isRootNode());
+              nodeArrayStub.restore();
+              app_view_object.getComponent.restore();
+              done();
+            });
+          }
 
-        var nodeArrayStub = sinon.stub(node_array[1].component.View.prototype,
-                                       'renderPromise', templateAPI);
+          var nodeArrayStub = sinon.stub(app_view_object.node_array[1].component.View.prototype,
+                                        'renderPromise', templateAPI);
 
-        deferal.children.add(node_array[1]);
+          app_view_object.deferal.children.add(app_view_object.node_array[1]);
 
-        assert.isTrue(parent_view.isRootNode());
+          assert.isTrue(parent_view.isRootNode());
+        })
+        .done();
       })
       .done();
-    })
-    .done();
+    });
   });
 
   it('should deleteSelf', function(done) {
