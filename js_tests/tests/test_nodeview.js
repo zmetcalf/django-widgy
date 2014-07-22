@@ -145,7 +145,7 @@ describe('NodeView', function() {
       .done();
     });
 
-    it('should stopDrag', function(done) {
+    it('should remove drop targets with stopDrag', function(done) {
       test.create();
       root_node_setup.then(function(app_view_object) {
         app_view_object.app_view.root_node_promise.then(function(parent_view) {
@@ -158,16 +158,15 @@ describe('NodeView', function() {
             return Q('<span><%title%></span>').then(function() {
               nodeArrayStub.restore();
               parent_view.startDrag(app_view_object.app_view.node_view_list.at(1));
-              assert.strictEqual(parent_view.dragged_view, app_view_object.app_view.node_view_list.at(1));
               assert.isNotNull(parent_view.drop_targets_list.at(0));
 
               var callback = sinon.spy();
-
               parent_view.stopDrag(callback);
 
               assert.isTrue(callback.calledWith(app_view_object.app_view.node_view_list.at(1)));
               assert.isUndefined(parent_view.dragged_view);
               assert.isUndefined(parent_view.drop_targets_list.at(0));
+
               app_view_object.getComponentStub.restore();
               test.destroy();
               done();
