@@ -43,7 +43,7 @@ describe('NodeView', function() {
     this.node = new nodes.Node({
       content: {
         component: 'testcomponent',
-        preview_template: '<span><%preview_template%></span>'
+        preview_template: '<span>preview_template</span>'
       }
     });
 
@@ -189,7 +189,7 @@ describe('NodeView', function() {
     });
   });
 
-  describe('CoreFunctions', function() {
+  describe('core functions', function() {
     var create_node_view = function(node) {
       var node_view = new nodes.NodeView({model: node});
       node_view.shelf = node_view.makeShelf();
@@ -202,7 +202,7 @@ describe('NodeView', function() {
     it('should getTemplate', function(done) {
       return this.node.ready(function(node) {
         var node_view = new nodes.NodeView({model: node});
-        assert.deepEqual(node_view.getTemplate(), '<span><%preview_template%></span>');
+        assert.deepEqual(node_view.getTemplate(), '<span>preview_template</span>');
         done();
       });
     });
