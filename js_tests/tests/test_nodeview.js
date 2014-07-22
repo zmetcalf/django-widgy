@@ -128,7 +128,6 @@ describe('NodeView', function() {
               // Could be seperate test - Tests DropTargetView.deactivate
               drop_targets_list.at(0).deactivate('');
               assert.isFalse(drop_targets_list.at(0).$el.hasClass('active'));
-              debugger
 
               test.destroy();
               app_view_object.getComponentStub.restore();
