@@ -104,7 +104,7 @@ describe('NodeView', function() {
       .done();
     });
 
-    it('should startDrag', function(done) {
+    it('should create drop targets with startDrag', function(done) {
       test.create();
       root_node_setup.then(function (app_view_object) {
         app_view_object.app_view.root_node_promise.then(function(parent_view) {
@@ -113,11 +113,13 @@ describe('NodeView', function() {
 
           var templateAPI = function() {
             return Q('<span><%title%></span>').then(function() {
+              var drop_targets_spy = sinon.spy(parent_view, 'addDropTargets');
               parent_view.startDrag(app_view_object.app_view.node_view_list.at(1));
 
-              var drop_targets_list = parent_view.drop_targets_list;
-
               assert.strictEqual(parent_view.dragged_view, app_view_object.app_view.node_view_list.at(1));
+              assert.isTrue(drop_targets_spy.withArgs(parent_view.dragged_view).calledOnce)
+
+              var drop_targets_list = parent_view.drop_targets_list;
               assert.instanceOf(drop_targets_list.at(0), nodes.DropTargetView);
               assert.isTrue(drop_targets_list.at(0).$el.hasClass('previous'));
               assert.isTrue(drop_targets_list.at(0).$el.hasClass('active'));
