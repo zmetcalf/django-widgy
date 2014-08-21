@@ -25,16 +25,16 @@ describe('AppView', function() {
   it('should initialize an AppView', function(done) {
     return this.node.ready(function(node) {
       // getComponent is stubbed because testcomponent is inaccessable from AppView
-      var deferal = {};
-      _.extend(deferal, node); // copies node to prevent Backbone from making child
+      var node_object = {};
+      _.extend(node_object, node); // copies node to prevent Backbone from making child
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
-                                        function() { return Q(deferal); });
+                                        function() { return Q(node_object); });
 
       var app_view = new widgy.AppView({ root_node: node });
 
       app_view.root_node_promise.then(function() {
         assert.strictEqual(app_view.node_view_list.at(0).content,
-                            deferal.content);
+                            node_object.content);
         getComponentStub.restore();
         done();
       });
@@ -44,10 +44,10 @@ describe('AppView', function() {
 
   it('should renderPromise', function(done) {
     return this.node.ready(function(node) {
-      var deferal = {};
-      _.extend(deferal, node);
+      var node_object = {};
+      _.extend(node_object, node);
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
-                                        function() { return Q(deferal); });
+                                        function() { return Q(node_object); });
       var app_view = new widgy.AppView({ root_node: node, model: node });
 
       app_view.root_node_promise.then(function() {
@@ -92,10 +92,10 @@ describe('AppView', function() {
 
   it('should fetchCompatibility', function(done) {
     return this.node.ready(function(node) {
-      var deferal = {};
-      _.extend(deferal, node);
+      var node_object = {};
+      _.extend(node_object, node);
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
-                                        function() { return Q(deferal); });
+                                        function() { return Q(node_object); });
       var app_view = new widgy.AppView({ root_node: node });
 
       app_view.root_node_promise.then(function() {
