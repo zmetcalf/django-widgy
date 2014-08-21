@@ -81,10 +81,10 @@ describe('AppView', function() {
           getComponentStub.restore();
           getTemplateStub.restore();
           makeStickyStub.restore();
+          $.ajax.restore();
           done();
         });
 
-        $.ajax.restore();
       });
     });
   });
@@ -108,12 +108,12 @@ describe('AppView', function() {
 
         var promise = app_view.fetchCompatibility();
 
-        $.ajax.restore();
 
         promise.then(function(inflight) {
           assert.strictEqual(inflight, testObject);
           assert.isTrue(callback.calledOnce);
           getComponentStub.restore();
+          $.ajax.restore();
           done();
         });
       });
@@ -141,11 +141,11 @@ describe('AppView', function() {
 
         var promise = Q(app_view.refreshCompatibility());
 
-        $.ajax.restore();
 
         promise.then(function() {
           assert.strictEqual(app_view.compatibility_data, testObject);
           getComponentStub.restore();
+          $.ajax.restore();
           done();
         });
       });
