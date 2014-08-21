@@ -122,10 +122,10 @@ describe('AppView', function() {
 
   it('should refreshCompatibility', function(done) {
     return this.node.ready(function(node) {
-      var deferal = {};
-      _.extend(deferal, node);
+      var node_object = {};
+      _.extend(node_object, node);
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
-                                        function() { return Q(deferal); });
+                                        function() { return Q(node_object); });
       var app_view = new widgy.AppView({ root_node: node });
 
       app_view.root_node_promise.then(function() {
@@ -154,10 +154,10 @@ describe('AppView', function() {
 
   it('should setCompatibility and updateCompatibility', function(done) {
     return this.node.ready(function(node) {
-      var deferal = {};
-      _.extend(deferal, node);
+      var node_object = {};
+      _.extend(node_object, node);
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
-                                        function() { return Q(deferal); });
+                                        function() { return Q(node_object); });
       var app_view = new widgy.AppView({ root_node: node });
 
       app_view.root_node_promise.then(function() {
@@ -184,10 +184,10 @@ describe('AppView', function() {
 
   it('should return if ready or not', function(done) {
     return this.node.ready(function(node) {
-      var deferal = {};
-      _.extend(deferal, node);
+      var node_object = {};
+      _.extend(node_object, node);
       var getComponentStub = sinon.stub(nodes.Node.prototype, 'getComponent',
-                                        function() { return Q(deferal); });
+                                        function() { return Q(node_object); });
       var app_view = new widgy.AppView({ root_node: node });
 
       app_view.root_node_promise.then(function() {
