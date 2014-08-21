@@ -84,7 +84,6 @@ describe('AppView', function() {
           $.ajax.restore();
           done();
         });
-
       });
     });
   });
