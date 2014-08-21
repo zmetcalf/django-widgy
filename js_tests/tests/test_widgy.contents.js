@@ -9,8 +9,8 @@ var nodes = requirejs('nodes/nodes')
     Q = requirejs('lib/q'),
     sinon = requirejs('sinon');
 
-describe('Content', function(done) {
-  it('should check if editable - false', function() {
+describe('Content', function() {
+  it('should check if editable - false', function(done) {
     var node = new nodes.Node({
       content: {
         component: 'testcomponent',
