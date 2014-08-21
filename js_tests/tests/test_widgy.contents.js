@@ -19,7 +19,6 @@ describe('Content', function() {
     return node.ready(function() {
       assert.isFalse(node.content.isEditable());
     })
-    .done();
   });
 
   it('should check if editable - true', function() {
@@ -32,7 +31,6 @@ describe('Content', function() {
     return node.ready(function() {
       assert.isTrue(node.content.isEditable());
     })
-    .done();
   });
 });
 
@@ -48,7 +46,7 @@ describe('EditorView', function() {
     });
   });
 
-  it('should return template', function() {
+  it('should return template', function(done) {
     return this.node.ready(function(node) {
       var edit_view = new contents.EditorView({
             'model': node.content
@@ -64,13 +62,12 @@ describe('EditorView', function() {
       template_promise.then(function(temp) {
         assert.deepEqual(temp, '<span><%edit_template%></span>');
       })
-      .done();
       $.ajax.restore();
+      done();
     })
-    .done();
   });
 
-  it('should submit and call serialize', function() {
+  it('should submit and call serialize', function(done) {
     return this.node.ready(function(node) {
       var edit_view = new contents.EditorView({
             'model': node.content
@@ -79,11 +76,11 @@ describe('EditorView', function() {
       edit_view.submit();
       assert.isTrue(edit_view.serialize.calledOnce);
       edit_view.serialize.restore();
+      done();
     })
-    .done();
   });
 
-  it('should submit the edit and report success', function() {
+  it('should submit the edit and report success', function(done) {
     return this.node.ready(function(node) {
       var edit_view = new contents.EditorView({
             'model': node.content
@@ -106,11 +103,11 @@ describe('EditorView', function() {
 
       edit_view.handleSuccess.restore();
       stub.restore();
+      done();
     })
-    .done();
   });
 
-  it('should submit the edit and report error', function() {
+  it('should submit the edit and report error', function(done) {
     return this.node.ready(function(node) {
       var edit_view = new contents.EditorView({
         'model': node.content
@@ -126,11 +123,11 @@ describe('EditorView', function() {
 
       edit_view.handleError.restore();
       $.ajax.restore();
+      done();
     })
-    .done();
   });
 
-  it('should handleSuccess', function() {
+  it('should handleSuccess', function(done) {
     return this.node.ready(function(node) {
       var edit_view = new contents.EditorView({
         'model': node.content
@@ -139,11 +136,11 @@ describe('EditorView', function() {
       edit_view.handleSuccess();
       assert.isTrue(edit_view.close.calledOnce);
       edit_view.close.restore();
+      done();
     })
-    .done();
   });
 
-  it('should handleError', function() {
+  it('should handleError', function(done) {
     return this.node.ready(function(node) {
       var edit_view = new contents.EditorView({
         'model': node.content
@@ -159,8 +156,8 @@ describe('EditorView', function() {
       edit_view.handleError(model, xhr, options);
       assert.deepEqual(edit_view.$el.find('li').eq(0).html(), '2');
       assert.deepEqual(edit_view.$el.find('li').eq(1).html(), '1');
+      done();
     })
-    .done();
   });
 });
 
@@ -176,11 +173,11 @@ describe('WidgetView', function() {
     });
   });
 
-  it('should return the editorClass', function() {
+  it('should return the editorClass', function(done) {
     return this.node.ready(function(node) {
       assert.strictEqual(node.component.View.prototype.getEditorClass(),
                         node.component.View.prototype.editorClass);
+      done();
     })
-    .done();
   });
 });
