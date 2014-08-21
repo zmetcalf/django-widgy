@@ -9,7 +9,7 @@ var nodes = requirejs('nodes/nodes')
     Q = requirejs('lib/q'),
     sinon = requirejs('sinon');
 
-describe('Content', function() {
+describe('Content', function(done) {
   it('should check if editable - false', function() {
     var node = new nodes.Node({
       content: {
@@ -18,10 +18,11 @@ describe('Content', function() {
     });
     return node.ready(function() {
       assert.isFalse(node.content.isEditable());
+      done();
     })
   });
 
-  it('should check if editable - true', function() {
+  it('should check if editable - true', function(done) {
     var node = new nodes.Node({
       content: {
         component: 'testcomponent',
@@ -30,6 +31,7 @@ describe('Content', function() {
     });
     return node.ready(function() {
       assert.isTrue(node.content.isEditable());
+      done();
     })
   });
 });
