@@ -37,10 +37,8 @@ describe('AppView', function() {
                             deferal.content);
         getComponentStub.restore();
         done();
-      })
-      .done();
-    })
-    .done();
+      });
+    });
   });
 
 
@@ -87,10 +85,8 @@ describe('AppView', function() {
         });
 
         $.ajax.restore();
-      })
-      .done();
-    })
-    .done();
+      });
+    });
   });
 
 
@@ -120,10 +116,8 @@ describe('AppView', function() {
           getComponentStub.restore();
           done();
         });
-      })
-      .done();
-    })
-    .done();
+      });
+    });
   });
 
 
@@ -154,10 +148,8 @@ describe('AppView', function() {
           getComponentStub.restore();
           done();
         });
-      })
-      .done();
-    })
-    .done();
+      });
+    });
   });
 
 
@@ -187,10 +179,8 @@ describe('AppView', function() {
         callback_filter.restore();
         getComponentStub.restore();
         done();
-      })
-      .done();
-    })
-    .done();
+      });
+    });
   });
 
   it('should return if ready or not', function(done) {
@@ -213,9 +203,7 @@ describe('AppView', function() {
         assert.isTrue(app_view.ready());
         getComponentStub.restore();
         done();
-      })
-      .done();
-    })
-    .done();
+      });
+    });
   });
 });

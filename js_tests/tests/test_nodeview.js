@@ -98,10 +98,8 @@ describe('NodeView', function() {
           app_view_object.node_object.children.add(app_view_object.node_array[1]);
 
           assert.isTrue(parent_view.isRootNode());
-        })
-        .done();
-      })
-      .done();
+        });
+      });
     });
 
     it('should create drop targets with startDrag', function(done) {
@@ -146,10 +144,8 @@ describe('NodeView', function() {
           var nodeArrayStub = sinon.stub(app_view_object.node_array[1].component.View.prototype, 'renderPromise', templateAPI);
 
           app_view_object.node_object.children.add(app_view_object.node_array[1]);
-        })
-        .done();
-      })
-      .done();
+        });
+      });
     });
 
     it('should remove drop targets with stopDrag', function(done) {
@@ -182,10 +178,8 @@ describe('NodeView', function() {
           var nodeArrayStub = sinon.stub(app_view_object.node_array[1].component.View.prototype, 'renderPromise', templateAPI);
 
           app_view_object.node_object.children.add(app_view_object.node_array[1]);
-        })
-        .done();
-      })
-      .done();
+        });
+      });
     });
   });
 
@@ -225,8 +219,7 @@ describe('NodeView', function() {
         node_view.list.closeAll.restore();
         node_view.shelf.close.restore();
         done();
-      })
-      .done();
+      });
     });
 
     it('should popOut', function(done) {

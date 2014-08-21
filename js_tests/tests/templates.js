@@ -28,7 +28,6 @@ describe('getTemplate', function() {
       assert.strictEqual(temp.render('template', {title: 'test'}), '<span>test</span>');
       stub.restore();
       done();
-    })
-    .done();
+    });
   });
 });

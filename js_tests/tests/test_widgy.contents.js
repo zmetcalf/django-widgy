@@ -57,15 +57,15 @@ describe('EditorView', function() {
         template: '<span><%title%></span>',
         edit_template: '<span><%edit_template%></span>'
       };
-      var myAPI = function() {return Q(simulated_ajax_response);};
-      var stub = sinon.stub($, 'ajax', myAPI);
+      var stub = sinon.stub($, 'ajax',
+        function() { return Q(simulated_ajax_response); });
       var template_promise = edit_view.getTemplate();
 
       template_promise.then(function(temp) {
         assert.deepEqual(temp, '<span><%edit_template%></span>');
+        $.ajax.restore();
+        done();
       })
-      $.ajax.restore();
-      done();
     })
   });
 
@@ -88,11 +88,6 @@ describe('EditorView', function() {
             'model': node.content
           });
       sinon.spy(edit_view, 'handleSuccess');
-      var myAPI = function() { return {
-        model: node.content,
-        respones: 'test',
-        options: {success: true}
-      }};
 
       // www.sitepoint.com/unit-testing-backbone-js-applications
 
